@@ -3,7 +3,7 @@
 
   const state = {
     data: null,
-    audit: null,
+    auditReport: null,
     search: '',
     category: 'all',
     checked: 'all',
@@ -363,7 +363,7 @@
         fetch('data/corpus.json').then(r => { if(!r.ok) throw Error(r.status); return r.json(); }),
         fetch('data/audit.json').then(r => r.ok ? r.json() : null).catch(() => null)
       ]);
-      state.data = data; state.audit = audit;
+      state.data = data; state.auditReport = audit;
       $('#stat-records').textContent=data.meta.records;
       $('#stat-terms').textContent=data.meta.unique_terms;
       $('#stat-verbs').textContent=data.meta.unique_verbs;
@@ -383,7 +383,7 @@
       <tr><th>${t('audit_found')}</th><td>${audit.records_found} / ${audit.records_checked}</td></tr>
       <tr><th>${t('audit_exact')}</th><td>${audit.exact_pair_matches}</td></tr>
       <tr><th>${t('audit_norm')}</th><td>${audit.normalized_pair_matches}</td></tr>
-      <tr><th>${t('audit_sample')}</th><td>${audit.verification_sample_normalized_matches} / ${audit.verification_sample_size}</td></tr>
+      <tr><th>${t('audit_sample')}</th><td>${audit.audit_sample_normalized_matches} / ${audit.audit_sample_size}</td></tr>
       <tr><th>${t('audit_missing')}</th><td>${audit.missing_ids.length}</td></tr>
     </tbody></table>`;
   }
