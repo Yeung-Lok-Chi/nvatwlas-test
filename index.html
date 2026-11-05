@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A bilingual explorer of English nominalization and Chinese verbalization in film subtitles.">
+  <title>Nominal Shift Atlas</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">NS</span><span><strong>Nominal Shift Atlas</strong><small data-i18n="brand_sub">English nouns into Chinese verbs</small></span></a>
+    <nav aria-label="Primary"><a class="active" href="index.html" data-i18n="nav_explore">Explore</a><a href="report.html" data-i18n="nav_report">Report</a><a href="codebook.html" data-i18n="nav_codebook">Codebook</a><a href="about.html" data-i18n="nav_method">Method & AI</a></nav>
+    <div class="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="zh">繁</button></div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="eyebrow" data-i18n="eyebrow">A 500-pair subtitle corpus</div>
+      <h1><span data-i18n="hero_title_1">Where English nouns</span><br><em data-i18n="hero_title_2">turn into Chinese verbs.</em></h1>
+      <p data-i18n="hero_intro">Search a traceable sample from NV Atlas, compare nominal renderings, and see how one noun can open several verbal paths.</p>
+      <div class="hero-actions"><a class="button primary" href="#explorer" data-i18n="cta_explore">Open the explorer</a><a class="button quiet" href="report.html" data-i18n="cta_report">Read the learning report</a></div>
+    </section>
+
+    <section class="stat-strip" aria-label="Corpus summary">
+      <div><strong id="stat-records">500</strong><span data-i18n="stat_records">sentence pairs</span></div>
+      <div><strong id="stat-terms">195</strong><span data-i18n="stat_terms">English nominal types</span></div>
+      <div><strong id="stat-verbs">282</strong><span data-i18n="stat_verbs">Chinese renderings</span></div>
+      <div><strong id="stat-checked">50</strong><span data-i18n="stat_checked">programmatic audit sample</span></div>
+    </section>
+
+    <section class="explorer" id="explorer">
+      <div class="section-heading"><div><div class="eyebrow" data-i18n="explore_eyebrow">Corpus explorer</div><h2 data-i18n="explore_title">Build a view, then share the URL.</h2></div><button class="button quiet compact" id="reset-view" type="button" data-i18n="reset">Reset view</button></div>
+      <div class="searchbar">
+        <label for="search"><span data-i18n="search_label">Search text, term, or verb</span><div class="input-wrap"><span aria-hidden="true">⌕</span><input id="search" type="search" autocomplete="off" placeholder="e.g. attention, 注意, protection"></div></label>
+        <label for="category-filter"><span data-i18n="category_filter">Category</span><select id="category-filter"><option value="all" data-i18n="all_categories">All categories</option></select></label>
+        <label for="checked-filter"><span data-i18n="checked_filter">Human check</span><select id="checked-filter"><option value="all" data-i18n="all_records">All records</option><option value="yes" data-i18n="checked_only">Human checked</option><option value="no" data-i18n="unchecked_only">Not yet human checked</option></select></label>
+        <label for="audit-filter"><span data-i18n="audit_filter">Audit sample</span><select id="audit-filter"><option value="all" data-i18n="all_records">All records</option><option value="yes" data-i18n="audit_only">50-row audit sample</option></select></label>
+        <label for="term-filter"><span data-i18n="term_filter">Key term</span><select id="term-filter"><option value="all" data-i18n="all_terms">All terms</option></select></label>
+        <label for="sort-filter"><span data-i18n="sort_filter">Sort table</span><select id="sort-filter"><option value="id" data-i18n="sort_id">Sentence ID</option><option value="term" data-i18n="sort_term">Key term A-Z</option><option value="category" data-i18n="sort_category">Category</option></select></label>
+      </div>
+      <div class="filter-status" aria-live="polite"><span id="result-summary"></span><button type="button" id="clear-selection" class="text-button" data-i18n="clear_selection">Clear selected term</button></div>
+
+      <div class="dashboard-grid">
+        <article class="panel network-panel">
+          <header class="panel-head"><div><div class="kicker" data-i18n="viz_network_kicker">01 · Relational</div><h3 data-i18n="viz_network_title">Nominal–verbal paths</h3></div><div class="panel-tools"><label><span data-i18n="top_terms">Top terms</span><input id="network-top" type="range" min="5" max="30" value="14"><output id="network-top-value">14</output></label><label><span data-i18n="min_link">Minimum link weight</span><input id="network-min" type="range" min="1" max="5" value="1"><output id="network-min-value">1</output></label></div></header>
+          <p class="caption" data-i18n="viz_network_caption">Which English nominal types are rendered through more than one Chinese verb?</p>
+          <div class="canvas-shell"><svg id="network-chart" role="img" aria-labelledby="network-caption"></svg><div class="empty-state" id="network-empty" hidden data-i18n="no_results">No records match this view.</div></div>
+          <p class="microcopy" data-i18n="network_help">Click a node to search it. Drag nodes to pin them. Scroll to zoom.</p>
+        </article>
+
+        <article class="panel treemap-panel">
+          <header class="panel-head"><div><div class="kicker" data-i18n="viz_tree_kicker">02 · Hierarchical</div><h3 data-i18n="viz_tree_title">Category composition</h3></div><div class="panel-tools"><label class="toggle"><input id="tree-highlight" type="checkbox"><span data-i18n="unique_only">Distinct terms only</span></label></div></header>
+          <p class="caption" data-i18n="viz_tree_caption">Which nominal functions dominate the filtered view, and which verbs make up each block?</p>
+          <div id="treemap-chart" class="treemap" role="img" aria-label="Category treemap"></div>
+        </article>
+
+        <article class="panel kwic-panel">
+          <header class="panel-head"><div><div class="kicker" data-i18n="viz_kwic_kicker">03 · Lexical</div><h3 data-i18n="viz_kwic_title">Bilingual KWIC</h3></div><div class="panel-tools"><button class="text-button" id="kwic-prev" type="button" data-i18n="previous">Previous</button><span id="kwic-position">1 / 1</span><button class="text-button" id="kwic-next" type="button" data-i18n="next">Next</button></div></header>
+          <p class="caption" data-i18n="viz_kwic_caption">How does the nominated English noun sit in context, and where does its Chinese verbal rendering appear?</p>
+          <div id="kwic-content" class="kwic-content"></div>
+        </article>
+
+        <article class="panel table-panel">
+          <header class="panel-head"><div><div class="kicker" data-i18n="viz_table_kicker">04 · Tabular</div><h3 data-i18n="viz_table_title">Evidence table</h3></div><button class="button quiet compact" id="export-csv" type="button" data-i18n="export">Export filtered CSV</button></header>
+          <p class="caption" data-i18n="viz_table_caption">Which sentence pairs support the current search and filters?</p>
+          <div class="table-wrap"><table><thead><tr><th data-i18n="th_id">ID</th><th data-i18n="th_term">English nominal</th><th data-i18n="th_verb">Chinese rendering</th><th data-i18n="th_category">Category</th><th data-i18n="th_source">Source text</th><th data-i18n="th_target">Target text</th><th data-i18n="th_checked">Check status</th></tr></thead><tbody id="table-body"></tbody></table></div>
+          <div class="table-foot"><span id="table-count"></span><div class="pagination"><button class="text-button" id="page-prev" type="button" data-i18n="previous">Previous</button><span id="page-position"></span><button class="text-button" id="page-next" type="button" data-i18n="next">Next</button></div></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="limitations">
+      <div><div class="eyebrow" data-i18n="limits_eyebrow">Read alongside the data</div><h2 data-i18n="limits_title">What this sample can—and cannot—show.</h2></div>
+      <div class="limit-grid">
+        <p><strong data-i18n="limit_one_title">A curated, not random, view.</strong> <span data-i18n="limit_one_text">The 500 supplied IDs are not reproducible from a stated NV Atlas random seed. Treat this as a frozen analytical sample, not a prevalence estimate for the whole corpus.</span></p>
+        <p><strong data-i18n="limit_two_title">A checking queue is not a human check.</strong> <span data-i18n="limit_two_text">The fixed 50-row sample has been reconciled against the public record set programmatically. A person should still read and approve it before marking it human_checked.</span></p>
+        <p><strong data-i18n="limit_three_title">Category judgments are interpretive.</strong> <span data-i18n="limit_three_text">The five categories summarize the noun's function in context. Boundary cases are documented openly in the codebook.</span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span data-i18n="footer_left">Built for 2026R1 Translation Technology in the Age of AI · CUHK</span><span><a href="https://nvatlas.tra.cuhk.edu.hk/" target="_blank" rel="noreferrer">Source: NV Atlas</a> · <a href="https://github.com/Yeung-Lok-Chi/nvatwlas-test" target="_blank" rel="noreferrer">Repository</a></span></footer>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

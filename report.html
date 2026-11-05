@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Learning report for the Nominal Shift Atlas corpus project.">
+  <title>Learning Report · Nominal Shift Atlas</title><link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="report">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">NS</span><span><strong>Nominal Shift Atlas</strong><small data-i18n="brand_sub">English nouns into Chinese verbs</small></span></a>
+    <nav aria-label="Primary"><a href="index.html" data-i18n="nav_explore">Explore</a><a class="active" href="report.html" data-i18n="nav_report">Report</a><a href="codebook.html" data-i18n="nav_codebook">Codebook</a><a href="about.html" data-i18n="nav_method">Method & AI</a></nav>
+    <div class="lang-switch" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="zh">繁</button></div>
+  </header>
+  <main id="main">
+    <header class="page-hero">
+      <div class="eyebrow" data-i18n="report_kicker">Learning report</div>
+      <h1 data-i18n="report_title">The noun is a decision point.</h1>
+      <p data-i18n="report_intro">A small corpus study of how English nominalizations become Chinese verbal actions in film subtitles.</p>
+    </header>
+    <div class="article-layout">
+      <aside class="toc" aria-label="Contents">
+        <strong data-i18n="toc">On this page</strong>
+        <a href="#origin">Origin</a><a href="#background">Background</a><a href="#gap">Gap</a><a href="#questions">Questions</a><a href="#method">Method</a><a href="#analysis">Analysis</a><a href="#conclusion">Conclusion</a><a href="#reflection">Reflection</a>
+      </aside>
+
+      <article class="article" data-lang-block="en">
+        <section id="origin"><h2>1. Origin</h2>
+          <p>I chose this topic after comparing the department’s NV Atlas with the course example. Both show the same broad concern—English nominalization and Chinese verbalization—but they approach it differently. NV Atlas offers a large searchable collection; the class project requires a smaller, explainable system. That contrast gave me a practical question: can a 500-pair sample make the <em>choices inside translation</em> easier to see?</p>
+          <p>I was also interested in a familiar subtitle pattern. A noun such as <em>attention</em> can be reproduced as the Chinese noun-like form <strong>注意</strong>, but it can also become actions such as <strong>稍息</strong>, <strong>知道</strong>, or <strong>重视</strong>. The translation is not a mechanical substitution. It depends on the scene, the speech act, and what the target language can say naturally.</p>
+        </section>
+        <section id="background"><h2>2. Background</h2>
+          <p>The project starts from the contrast between an English style that often packages events as nouns and a Chinese style that often expresses them through verbs. In translation studies, this is related to Vinay and Darbelnet’s translation procedures, particularly transposition, and to broader discussions of “noun-heavy” English and “verb-heavy” Chinese.</p>
+          <p>The supplied CSV already identifies an English nominal and a Chinese rendering for each sentence pair. That gives the project a useful unit of analysis: a short subtitle pair and one aligned nominal–verbal relationship inside it. The corpus is not a general sample of all English or Chinese; it is a sample of translated film dialogue.</p>
+        </section>
+        <section id="gap"><h2>3. Gap</h2>
+          <p>A searchable corpus can show that several translations exist, but a list of matches does not by itself explain how those alternatives differ. Large dashboards can also make it difficult to move from a pattern back to the sentence that produced it. My project therefore focuses on the path from an English nominal to multiple Chinese renderings, while keeping the original sentence pair visible.</p>
+          <p>There is a second gap in the supplied data: it does not include a documented sampling seed or a person-verified flag. I have not invented either one. The website records the public record reconciliation and treats the 500 IDs as a fixed analytical sample. That limitation matters: the category shares describe this sample, not the whole NV Atlas.</p>
+        </section>
+        <section id="questions"><h2>4. Questions</h2>
+          <ol>
+            <li>Which English nominal types appear with the widest range of Chinese renderings in this sample?</li>
+            <li>How are those renderings distributed across five functional categories?</li>
+            <li>What can a bilingual keyword-in-context view reveal that a search result list cannot?</li>
+            <li>Can linked visualizations help a reader move from an aggregate pattern back to verifiable evidence?</li>
+          </ol>
+        </section>
+        <section id="method"><h2>5. Method</h2>
+          <h3>Source and sample</h3>
+          <p>The data comes from the supplied <code>NVAtlas-AI-Agent.csv</code>, whose records are identified as OpenSubtitles v2024 material through the public NV Atlas. The CSV contains 500 unique sentence IDs and 195 unique English nominal lemmas. I preserved the raw file and created a normalized website dataset; the original CSV’s SHA-256 digest is recorded in <code>data/build_report.json</code>.</p>
+          <p>The 500 IDs are not consecutive and are not reproducible from the random seeds I tested. Because no seed is documented, this is a <strong>frozen analytical sample</strong>, not a probability sample. I therefore do not present category percentages as estimates of the full NV Atlas.</p>
+          <h3>Source reconciliation</h3>
+          <p>I compared every record with the public NV Atlas search payload. All 500 IDs were found. Using Unicode NFKC and whitespace normalization, 481 of 500 sentence pairs matched; 19 differ in Chinese character form, punctuation, or wording. These are logged in <code>data/audit.json</code> and are not silently corrected.</p>
+          <div class="callout" data-audit><p>Loading reconciliation report…</p></div>
+          <h3>Verification sample</h3>
+          <p>A fixed sample of 50 IDs was drawn with <code>random.Random(20261105).sample</code> from the 500 IDs. The sample is available for the required human check and is shown through the <em>50-row audit sample</em> filter. Programmatic reconciliation is not the same as personal verification, so the final student review must still read each pair against the source and set <code>human_checked</code> only after approval.</p>
+          <h3>Classification</h3>
+          <p>I classified the 195 nominal types using the five-category codebook published on this site. Assignments are made at the lemma-type level and then applied to all records containing that type. This improves consistency, but it also means that a context-sensitive exception is not separately coded. Boundary cases are discussed in the codebook.</p>
+          <h3>Codebook log</h3>
+          <p>Initial draft: a rough distinction between “direct action” and “communication.” Test revision: the draft was too broad and mixed nouns that name a communicative act with nouns that describe an internal state. Final revision: five functional categories—direct verbalization, event/process, speech/communication, mental/emotional, and relational/state—were fixed before the visualizations were built. A computational check caught 13 observed lemmas omitted from my first mapping; I corrected the map rather than allowing those records to fall into a default category silently.</p>
+        </section>
+        <section id="analysis"><h2>6. Analysis</h2>
+          <p>The figures below are generated from the same <code>corpus.json</code> that feeds the explorer. The analysis refers to the four named views in the site.</p>
+          <figure class="report-chart"><div data-report-category></div><figcaption>Figure 1. Record counts by functional category (n = 500).</figcaption></figure>
+          <h3>Category composition</h3>
+          <p>Direct verbalization is the largest category in this sample (164 records, 32.8%), followed by event/process (112, 22.4%), mental/emotional (104, 20.8%), speech/communication (85, 17.0%), and relational/state (35, 7.0%). This does not show that Chinese prefers direct verbs in general. It shows that the supplied sample is dominated by sentence pairs where a nominal was explicitly paired with a relatively direct verbal rendering.</p>
+          <h3>Nominal–verbal paths</h3>
+          <p>The Relational view makes polysemy visible. <em>Attention</em> is the largest hub: 45 records and four distinct renderings, led by <strong>注意</strong> (42), with <strong>稍息</strong>, <strong>知道</strong>, and <strong>重视</strong> as context-specific alternatives. <em>Permission</em> is another useful case: 17 records and five surface forms in this data, mainly <strong>允许</strong>, with <strong>批准</strong>, <strong>准许</strong>, <strong>获准</strong>, and a traditional-character variant. These are not automatically five different translation strategies; they are evidence that one lemma can participate in several contextual choices.</p>
+          <figure class="report-chart"><div data-report-top></div><figcaption>Figure 2. Ten most frequent English nominal types in the 500-pair sample.</figcaption></figure>
+          <h3>Bilingual KWIC</h3>
+          <p>The KWIC view answers a different question from the network: what does the surrounding sentence actually do? For example, the record <strong>Attention!</strong> → <strong>稍息</strong> is not a generic rendering of the noun “attention.” It is a military command. <strong>Attention, please.</strong> → <strong>请注意</strong> is a public address. The same English key term is stable; its speech function is not.</p>
+          <h3>Evidence table</h3>
+          <p>The table keeps IDs, source text, target text, category, and verification status in one place. Clicking a row carries its term and Chinese rendering back to the other views. The table is therefore both a data grid and a check on the charts: a user can inspect the records behind any selected term rather than trusting a visual total.</p>
+          <h3>What the charts do not prove</h3>
+          <p>Several records contain translations that are nouns, adjectives, or fixed expressions rather than verbs. The <code>Chinese_Verb</code> field is the project’s analytical label, not a part-of-speech proof. Shared subtitles also repeat dialogue, and the sample includes 12 repeated source sentences among its 500 records. For these reasons, the result should be read as a qualitative map of possible shifts, not as a frequency study of Chinese grammar.</p>
+        </section>
+        <section id="conclusion"><h2>7. Conclusion</h2>
+          <p>The project achieves a working static corpus explorer: 500 traceable records, five documented categories, a linked network and treemap, a bilingual KWIC view, a sortable table, CSV export, URL-persisted search state, and an English–Traditional Chinese interface. It also makes the analytical limitation visible. The most useful finding is not a single percentage; it is that the same English nominal can be a label, a command, an action, or a state depending on the scene.</p>
+        </section>
+        <section id="reflection"><h2>8. Reflection</h2>
+          <p>The hardest part was not drawing a chart. It was deciding what should be counted as a category and what should remain a caveat. An AI agent can generate a coherent-looking taxonomy very quickly, but coherence is not the same as a defensible decision rule. I learned to check the number of records, the unique terms, the duplicates, and the source variants before trusting the visual summary.</p>
+          <p>AI was useful for drafting code, testing edge cases, extracting the public record set, and proposing interaction patterns. It could not decide whether a particular subtitle rendering is a good translation, and it could not honestly mark records as <code>human_checked</code> without a person reviewing them. I would improve the project by documenting a reproducible sample from the start, adding a full sentence-level human audit, and classifying occasional context-sensitive exceptions rather than assigning every occurrence of a lemma the same category.</p>
+        </section>
+      </article>
+
+      <article class="article" data-lang-block="zh">
+        <section><h2>1. 緣起</h2>
+          <p>我比較翻譯系 NV Atlas 與課程示例網站後選擇了這個題目。兩者都關注英文名詞化與中文動詞化，但取向不同：NV Atlas 是大型可搜尋語料庫，而課程專題要求較小、可解釋的系統。這個對照帶來一個實際問題：500 對樣本能否令翻譯過程中的<em>選擇</em>更容易被看見？</p>
+          <p>我也留意到字幕中常見的現象。例如英文名詞 <em>attention</em> 可以譯成較接近名詞形式的「注意」，也可以依情境變成「稍息」、「知道」或「重視」。翻譯不是機械替換，而是受場景、言語行為及譯入語自然表達方式影響的決定。</p>
+        </section>
+        <section><h2>2. 背景</h2>
+          <p>本項目從英文常把事件包裝成名詞、中文常以動詞表達的差異出發。這與 Vinay 和 Darbelnet 的翻譯程序，尤其「詞性轉換」有關，也涉及「英文重名詞、中文重動詞」的討論。</p>
+          <p>提供的 CSV 已為每對句子標出一個英文名詞及其中文譯法，因此分析單位可界定為「字幕句對中的一組名詞—動詞對應」。這批語料並非英文或中文的普遍樣本，而是翻譯電影對白的樣本。</p>
+        </section>
+        <section><h2>3. 研究缺口</h2>
+          <p>可搜尋語料庫能顯示多種譯法，但單看搜尋結果，未必能解釋各譯法在情境中的差異；大型儀表板也可能令人難以由整體模式返回原始句對。本項目因此集中呈現「英文名詞到多個中文譯法」的路徑，同時保留原句與譯句。</p>
+          <p>提供的資料另有一個缺口：沒有記錄抽樣種子，也沒有由人手完成的核對標記。我沒有虛構這些資料。網站記錄了與公開記錄的核對結果，並把 500 個編號視為固定的分析樣本。因此，類別比例只描述這個樣本，不能推論至整個 NV Atlas。</p>
+        </section>
+        <section><h2>4. 研究問題</h2>
+          <ol><li>哪些英文名詞類型在本樣本中有最多不同的中文譯法？</li><li>這些譯法如何分佈在五個功能類別中？</li><li>雙語關鍵詞語境視圖能顯示搜尋結果列表以外的甚麼？</li><li>互相連結的視覺化能否幫助讀者由整體模式返回可核查的證據？</li></ol>
+        </section>
+        <section><h2>5. 方法</h2>
+          <h3>來源與樣本</h3>
+          <p>資料來自提供的 <code>NVAtlas-AI-Agent.csv</code>；這些記錄透過公開 NV Atlas 標示為 OpenSubtitles v2024 語料。CSV 有 500 個不重複句子編號及 195 個不重複英文名詞詞元。我保留原始檔案，另建立網站用的正規化資料，並在 <code>data/build_report.json</code> 記錄原 CSV 的 SHA-256 摘要。</p>
+          <p>500 個編號並非連續，且不能以我測試過的隨機種子重現。由於沒有記錄抽樣種子，這是<strong>固定的分析樣本</strong>，不是概率樣本。因此，我不會把類別百分比當作整個 NV Atlas 的估計。</p>
+          <h3>來源核對</h3>
+          <p>我把每一筆記錄與公開 NV Atlas 搜尋頁所載資料比較。500 個編號全部找到；使用 Unicode NFKC 及空白正規化後，481 對句對相符，另外 19 對在漢字形體、標點或措辭上有差異。這些差異記錄於 <code>data/audit.json</code>，沒有被暗中修改。</p>
+          <div class="callout" data-audit><p>正在載入核對報告…</p></div>
+          <h3>核對樣本</h3>
+          <p>我以 <code>random.Random(20261105).sample</code> 從 500 個編號中抽取固定的 50 個，供課程要求的人工核對，並可透過「50 筆核對樣本」篩選查看。程式核對不等於個人核對，因此最終仍須由學生逐項閱讀來源並批准後，才可把 <code>human_checked</code> 設為「是」。</p>
+          <h3>分類</h3>
+          <p>我把 195 個名詞類型按網站上的五類分類手冊歸類。分類在詞元層完成，再套用到所有含該詞元的記錄，以提升一致性；但同一詞元在不同情境中的例外不會另設標記。邊界個案在分類手冊中說明。</p>
+          <h3>分類手冊修訂記錄</h3>
+          <p>初稿只粗略區分「直接動作」與「溝通」，測試後發現範圍過闊，並混淆了言語行為與內在心理狀態。最終版本在建立視覺化前固定為五類：直接動詞化、事件／過程、言語／溝通、心理／情感、關係／狀態。程式檢查發現初版映射遺漏 13 個實際出現的詞元；我更正映射，而不是讓資料靜默落入預設類別。</p>
+        </section>
+        <section><h2>6. 分析</h2>
+          <p>以下圖表與探索器均由同一份 <code>corpus.json</code> 產生。分析會引用網站內四個具名視圖。</p>
+          <figure class="report-chart"><div data-report-category></div><figcaption>圖一：各功能類別的記錄數（n = 500）。</figcaption></figure>
+          <h3>類別組成</h3>
+          <p>本樣本中直接動詞化最多（164 筆，32.8%），其次為事件／過程（112 筆，22.4%）、心理／情感（104 筆，20.8%）、言語／溝通（85 筆，17.0%）及關係／狀態（35 筆，7.0%）。這不表示中文普遍偏好直接動詞，而是顯示提供的樣本以名詞與較直接動詞譯法配對的句對為主。</p>
+          <h3>名詞與動詞路徑</h3>
+          <p>關係視圖令一詞多譯的情况更明顯。<em>Attention</em> 是最大的樞紐：45 筆記錄、四種譯法，以「注意」為主（42），另有「稍息」、「知道」和「重視」。<em>Permission</em> 亦值得注意：17 筆記錄中出現五種形式，主要是「允許」，另有「批准」、「准許」、「獲准」及繁體字形變體。這些形式不必然代表五種不同的翻譯策略，而是顯示同一詞元可參與多種情境選擇。</p>
+          <figure class="report-chart"><div data-report-top></div><figcaption>圖二：500 對樣本中出現次數最高的十個英文名詞類型。</figcaption></figure>
+          <h3>雙語關鍵詞語境</h3>
+          <p>關鍵詞語境視圖回答另一個問題：周圍句子實際在做甚麼？例如 <strong>Attention!</strong> →「稍息」並不是名詞「attention」的通用譯法，而是軍事口令；<strong>Attention, please.</strong> →「請注意」則是公共廣播。英文關鍵詞相同，言語功能卻不同。</p>
+          <h3>證據表</h3>
+          <p>表格把句子編號、原文、譯文、類別及核對狀態放在同一處。點擊任何一行，會把該行的名詞及中文譯法帶回其他視圖。因此，表格既是資料表，也是圖表的核對工具：讀者可查看任何已選名詞背後的記錄，而不必只信賴圖表的總數。</p>
+          <h3>圖表不能證明甚麼</h3>
+          <p>部分記錄的中文譯法其實是名詞、形容詞或固定表達，而非動詞。<code>Chinese_Verb</code> 是本項目的分析標籤，不是詞性證明。字幕來源亦可能重複對白；樣本 500 筆中有 12 個重複原句。因此，結果應理解為「可能轉換路徑的質性地圖」，而非中文語法頻率研究。</p>
+        </section>
+        <section><h2>7. 結論</h2>
+          <p>本項目完成一個可運作的靜態語料探索器：500 筆可追溯記錄、五個公開類別、互相連結的網絡圖與矩形樹圖、雙語關鍵詞語境、可排序表格、CSV 匯出、保存在網址中的搜尋狀態，以及英文／繁體中文介面。它同時公開分析限制。最重要的發現不是某個百分比，而是同一英文名詞可隨場景成為標籤、命令、行動或狀態。</p>
+        </section>
+        <section><h2>8. 反思</h2>
+          <p>最困難的不是畫圖，而是決定甚麼應算作類別、甚麼應保留為限制。AI 代理能迅速生成看似完整的分類，但「一致」不等於「有辯護力」。我學會先核查記錄數、不重複詞元、重複句子及來源差異，再相信視覺摘要。</p>
+          <p>AI 有助起草程式、測試邊界情況、抽取公開記錄及提出互動方式；但 AI 不能判斷某個字幕譯法是否好的翻譯，也不能在沒有人工閱讀的情況下誠實地把記錄標為 <code>human_checked</code>。若能重做，我會由一開始記錄可重現的抽樣方法、完成完整的句級人工核對，並為個別情境例外另設類別，而不是把同一詞元的所有出現都歸入同一類。</p>
+        </section>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><span data-i18n="footer_left">Built for 2026R1 Translation Technology in the Age of AI · CUHK</span><span><a href="https://nvatlas.tra.cuhk.edu.hk/" target="_blank" rel="noreferrer">Source: NV Atlas</a> · <a href="https://github.com/Yeung-Lok-Chi/nvatwlas-test" target="_blank" rel="noreferrer">Repository</a></span></footer>
+  <script src="js/i18n.js"></script><script src="js/report.js"></script>
+</body>
+</html>
